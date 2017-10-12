@@ -4,7 +4,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import dummySmsList from '../../data';
 import * as actions from '../../actions/';
 // import { store } from '../../store';
 import PaginationComponent from '../common/pagination';
@@ -78,7 +77,7 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
         super(props);
         this.state = {
             activePage: 1,
-            itemPerPage: 6,
+            itemPerPage: 4,
             statusDdId: "1",
             commentsDdId: "1",
             statusDd: [{ label: "New", value: "New" }, { label: "Hired", value: "Hired" }, { label: "Round 1", value: "Round 1" }, { label: "Round 2", value: "Round 2" }, { label: "Round 3", value: "Round 3" }],
@@ -92,10 +91,10 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
             <div >
                 <h2>User List</h2>
                 <div className="row justify-content-start margin-bottom-10">
-                    <div className="col-1">
+                    <div className="col-md-1 col-sm-2 col-xs-12">
                         Filters:-
                         </div>
-                    <div className="col-2">
+                    <div className="col-md-4 col-sm-5 col-xs-12">
                         <select className="form-control  form-control-sm"
                             onChange={this.updateStatusDdState.bind(this)}
                             value={this.state.statusDdId}>
@@ -105,7 +104,7 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
                             })}
                         </select>
                     </div>
-                    <div className="col-2">
+                    <div className="col-md-4 col-sm-5 col-xs-12">
                         <select className="form-control  form-control-sm"
                             onChange={this.updateCommentDdState.bind(this)}
                             value={this.state.commentsDdId}>
@@ -166,7 +165,9 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
         updateStoreArr.map((dd) => {
             this.props.updateCommonData(this.state[dd], dd);
         });
-        this.getUserList();
+        if (this.props.userData.userList.length === 0) {
+            this.getUserList();
+        }
     }
     public getUserListToShow(array: Array<SingleUser>): Array<SingleUser> {
         let arrayList: any = [];
@@ -187,10 +188,18 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
                 return response.json();
             })
             .then((data) => {
-                this.props.updateUserList(data);
-                // this.setState({
-                //     userList: data
-                // })
+                let parsedArray: Array<SingleUser> = [];
+                data.map((obj: any) => {
+                    parsedArray.push({
+                        name: obj.name,
+                        id: obj.id,
+                        conductedBy: "",
+                        status: "",
+                        editable: false,
+                        comments: ""
+                    })
+                });
+                this.props.updateUserList(parsedArray);
             });
     }
     public updateStatusDdState(event: any): void {
@@ -199,20 +208,8 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
     public updateCommentDdState(event: any): void {
         this.setState({ commentsDdId: event.target.value, activePage: 1 });
     }
-    public handlePaginationChange(event: any, action: string): void {
-        if (action === 'TO_PAGE_NUMBER') {
-            this.setState({ activePage: parseInt(event.target.value) });
-        } else if (action === 'NEXT') {
-            if (this.state.activePage >= (dummySmsList.length / this.state.itemPerPage)) {
-                return;
-            }
-            this.setState({ activePage: this.state.activePage + 1 });
-        } else if (action === 'PERVIOUS') {
-            if (this.state.activePage <= 1) {
-                return;
-            }
-            this.setState({ activePage: this.state.activePage - 1 });
-        }
+    public handlePaginationChange(value: number): void {
+        this.setState({ activePage: value });
     }
     public editClick(event: any, id: number): void {
         this.props.userData.userList.map((obj, i) => {
