@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { PieChart } from 'react-easy-chart';
 
 class ReportComponent extends React.Component<IReportProp, {}> {
     constructor(props: IReportProp) {
@@ -18,14 +19,28 @@ class ReportComponent extends React.Component<IReportProp, {}> {
                 numberOfNoHire = numberOfNoHire + 1;
             }
         });
+        let dataArr = [
+            { key: 'Total Hire', value: numberOfHire },
+            { key: 'Total No Hire', value: numberOfNoHire }
+        ];
         return (
-            <div>
-                <h3>Total Applicant</h3>
-                <p>{this.props.userData.userList.length}</p>
-                <h3>Number Of Hire</h3>
-                <p>{numberOfHire}</p>
-                <h3>Number Of No Hire</h3>
-                <p>{numberOfNoHire}</p>
+            <div className="margin-top-20">
+                <div className="row">
+                    <div className="col-md-6 text-center">
+                        <PieChart
+                            size={300}
+                            data={dataArr}
+                        />
+                    </div>
+                    <div className="col-md-6">
+                        <h3>Total Applicant</h3>
+                        <p>{this.props.userData.userList.length}</p>
+                        <h3>Number Of Hire</h3>
+                        <p>{numberOfHire}</p>
+                        <h3>Number Of No Hire</h3>
+                        <p>{numberOfNoHire}</p>
+                    </div>
+                </div>
             </div>
         );
     }
