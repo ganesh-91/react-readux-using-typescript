@@ -68,7 +68,7 @@ class PaginationComponent extends React.Component<any, IPaginationComponentProps
             // this.setState({ activePage: this.state.activePage + 1 });
             this.props.pageChange(this.props.activePage + 1);
         } else if (action === 'PERVIOUS') {
-            if (this.state.activePage <= 1) {
+            if (this.props.activePage <= 1) {
                 return;
             }
             this.props.pageChange(this.props.activePage - 1);
