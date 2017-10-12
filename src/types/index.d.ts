@@ -55,6 +55,8 @@ interface ITableDataRowProp {
 interface IUserListState {
     statusDd: Array<Status>;
     activePage: number;
+    filterByApplicantName: string;
+    filterByConductorName: string;
     itemPerPage: number;
     statusDdId: string;
     commentsDdId: string;

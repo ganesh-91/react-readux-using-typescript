@@ -18,39 +18,16 @@ class TableDataRow extends React.Component<ITableDataRowProp, {}> {
                 </td>
                 <td>
                     <label hidden={this.props.data.editable}>{this.props.data.name}</label>
-                    <input value={this.props.singleUser.name}
-                        onChange={e => this.props.updateSingleUserFields(e, "name")}
-                        className="form-control  form-control-sm"
-                        hidden={!this.props.data.editable} />
                 </td>
                 <td>
                     <label hidden={this.props.data.editable}>{this.props.data.status}</label>
-                    <select className="form-control  form-control-sm"
-                        onChange={e => this.props.updateSingleUserFields(e, "status")}
-                        hidden={!this.props.data.editable}
-                        value={this.props.singleUser.status}>
-                        {this.props.selectOptions.map((el, i) => {
-                            return (<option key={i} value={el.value}>{el.label}</option>)
-                        })}
-                    </select>
                 </td>
                 <td>
                     <label hidden={this.props.data.editable}>{this.props.data.conductedBy}</label>
-                    <input value={this.props.singleUser.conductedBy}
-                        onChange={e => this.props.updateSingleUserFields(e, "conductedBy")}
-                        className="form-control  form-control-sm"
-                        hidden={!this.props.data.editable} />
+
                 </td>
                 <td>
                     <label hidden={this.props.data.editable}>{this.props.data.comments}</label>
-                    <select className="form-control  form-control-sm"
-                        onChange={e => this.props.updateSingleUserFields(e, "comments")}
-                        hidden={!this.props.data.editable}
-                        value={this.props.singleUser.comments}>
-                        {this.props.commentOptions.map((el, i) => {
-                            return (<option key={i} value={el.value}>{el.label}</option>)
-                        })}
-                    </select>
                 </td>
                 <td>
                     <div>
@@ -80,6 +57,8 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
             itemPerPage: 4,
             statusDdId: "1",
             commentsDdId: "1",
+            filterByApplicantName: "",
+            filterByConductorName: "",
             statusDd: [{ label: "New", value: "New" }, { label: "Hired", value: "Hired" }, { label: "Round 1", value: "Round 1" }, { label: "Round 2", value: "Round 2" }, { label: "Round 3", value: "Round 3" }],
             commentsDd: [{ value: "StrongHire", label: "Strong Hire" }, { value: "Hire", label: "Hire" }, { value: "NoHire", label: "No Hire" }, { value: "StrongNoHire", label: "Strong no hire" }],
         };
@@ -90,10 +69,10 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
         return (
             <div >
                 <h2>User List</h2>
+                <div >
+                    Filters:-
+                    </div >
                 <div className="row justify-content-start margin-bottom-10">
-                    <div className="col-md-2 col-xs-12">
-                        Filters:-
-                        </div>
                     <div className="col-md-3 col-xs-12">
                         <select className="form-control  form-control-sm"
                             onChange={this.updateStatusDdState.bind(this)}
@@ -115,22 +94,27 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
                         </select>
                     </div>
                     <div className="col-md-3 col-xs-12">
-                        <select className="form-control  form-control-sm"
-                            onChange={this.updateCommentDdState.bind(this)}
-                            value={this.state.commentsDdId}>
-                            <option value="1" >Show all by Comment</option>
-                            {this.state.commentsDd.map((el, i) => {
-                                return (<option key={i} value={el.value}>{el.label}</option>)
-                            })}
-                        </select>
+                        <input value={this.state.filterByApplicantName}
+                            placeholder="Search in Applicant's Name"
+                            onChange={(event) => {
+                                this.setState({ filterByApplicantName: event.target.value });
+                            }}
+                            className="form-control form-control-sm" />
+                    </div>
+                    <div className="col-md-3 col-xs-12">
+                        <input value={this.state.filterByConductorName}
+                            placeholder="Search in Conductor's Name"
+                            onChange={(event) => {
+                                this.setState({ filterByConductorName: event.target.value });
+                            }}
+                            className="form-control form-control-sm" />
                     </div>
                 </div>
-
                 <table className="table table-hover table-responsive">
                     <thead className="thead-inverse">
                         <tr>
                             <th>#</th>
-                            <th>Name</th>
+                            <th>Applicant's Name</th>
                             <th>Status</th>
                             <th>Conducted By</th>
                             <th>Comments</th>
@@ -183,11 +167,14 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
         let arrayList: any = [];
         array.map((dataObj) => {
             if (((this.state.statusDdId === dataObj.status) || this.state.statusDdId === "1") &&
-                ((this.state.commentsDdId === dataObj.comments) || this.state.commentsDdId === "1")) {
+                ((this.state.commentsDdId === dataObj.comments) || this.state.commentsDdId === "1") &&
+                ((dataObj.name.toUpperCase().includes(this.state.filterByApplicantName.toUpperCase())) || this.state.filterByApplicantName === "") &&
+                ((dataObj.conductedBy.toUpperCase().includes(this.state.filterByConductorName.toUpperCase())) || this.state.filterByConductorName === "")) {
                 arrayList.push(dataObj);
             }
         });
         return arrayList;
+        //dataObj.contFirstName.toUpperCase().includes(this.props.contactCommonData.searchField.toUpperCase()
     }
     public getUserList() {
         fetch('https://jsonplaceholder.typicode.com/users')
