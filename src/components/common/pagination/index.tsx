@@ -14,7 +14,7 @@ class PaginationComponent extends React.Component<any, IPaginationComponentProps
             if (this.props.activePage === i) {
                 rows.push(
                     <li className="page-item" key={i}
-                        onClick={e => this.props.pageChange(e, 'TO_PAGE_NUMBER')} >
+                        onClick={this.handlePaginationChange.bind(this, 'TO_PAGE_NUMBER')} >
                         <button type="button" value={i}
                             className="page-link btn btn-link active">{i}
                         </button>
@@ -23,7 +23,7 @@ class PaginationComponent extends React.Component<any, IPaginationComponentProps
             } else {
                 rows.push(
                     <li className="page-item" key={i}
-                        onClick={e => this.props.pageChange(e, 'TO_PAGE_NUMBER')} >
+                        onClick={this.handlePaginationChange.bind(this, 'TO_PAGE_NUMBER')} >
                         <button type="button" value={i}
                             className="page-link btn btn-link">{i}
                         </button>
@@ -39,7 +39,7 @@ class PaginationComponent extends React.Component<any, IPaginationComponentProps
                 <ul hidden={!showPagination} className={'pagination  pagination-sm' + ' ' + this.props.componentClassName}>
                     <li className="page-item">
                         <button type="button" className="page-link btn btn-link"
-                            onClick={e => this.props.pageChange(e, 'PERVIOUS')}>
+                            onClick={this.handlePaginationChange.bind(this, 'PERVIOUS')}>
                             <span aria-hidden="true">&laquo;</span>
                             <span className="sr-only">Previous</span>
                         </button>
@@ -47,7 +47,7 @@ class PaginationComponent extends React.Component<any, IPaginationComponentProps
                     {rows}
                     <li className="page-item">
                         <button type="button" className="page-link btn btn-link"
-                            onClick={e => this.props.pageChange(e, 'NEXT')}>
+                            onClick={this.handlePaginationChange.bind(this, 'NEXT')}>
                             <span aria-hidden="true">&raquo;</span>
                             <span className="sr-only">Next</span>
                         </button>
@@ -55,6 +55,25 @@ class PaginationComponent extends React.Component<any, IPaginationComponentProps
                 </ul>
             </nav>
         );
+    }
+    public handlePaginationChange(action: string, event: any): void {
+
+        if (action === 'TO_PAGE_NUMBER') {
+            // this.setState({ activePage: parseInt(event.target.value) });
+            this.props.pageChange(parseInt(event.target.value));
+        } else if (action === 'NEXT') {
+            if (this.props.activePage >= (this.props.itemCount / this.props.itemPerPage)) {
+                return;
+            }
+            // this.setState({ activePage: this.state.activePage + 1 });
+            this.props.pageChange(this.props.activePage + 1);
+        } else if (action === 'PERVIOUS') {
+            if (this.state.activePage <= 1) {
+                return;
+            }
+            this.props.pageChange(this.props.activePage - 1);
+            // this.setState({ activePage: this.state.activePage - 1 });
+        }
     }
 }
 
