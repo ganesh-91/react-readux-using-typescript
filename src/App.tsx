@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import UserList from './components/userList';
 import SingleUserComponent from './components/singleUser';
+import ReportComponent from './components/report';
 
 import Sidebar from './components/sidebar';
 import Header from './components/header';
@@ -26,6 +27,7 @@ class App extends React.Component<{ location?: any }, {}> {
               <Switch>
                 <Route path='/user-list' component={UserList} />
                 <Route path='/single-user/:userId' component={SingleUserComponent} />
+                <Route path='/report' component={ReportComponent} />
               </Switch>
             </main>
           </div >
