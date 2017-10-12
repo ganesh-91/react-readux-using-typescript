@@ -92,10 +92,6 @@ class ContentViewWrapper extends React.Component<IContentViewWrapperProps, ICont
         return (
             <main className="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
                 <h1>Dashboard</h1>
-                {/* <input value={this.props.singleUser.name}
-                    onChange={e => this.props.updateSingleUserFields(e, "name")}
-                    className="form-control  form-control-sm"
-                    hidden={!this.props.data.editable} /> */}
                 <div className="row justify-content-start margin-bottom-10">
                     <div className="col-1">
                         Filters:-
@@ -151,27 +147,11 @@ class ContentViewWrapper extends React.Component<IContentViewWrapperProps, ICont
                             }
                             return null
                         })}
-                        {/* {this.props.userData.userList.map((user, i) => {
-                            if (i <= (((this.state.activePage) * this.state.itemPerPage) - 1) && i >= ((this.state.activePage - 1) * this.state.itemPerPage)) {
-                                return (
-                                    <TableDataRow
-                                        index={i}
-                                        editClick={this.editClick.bind(this)}
-                                        updateSingleUserFields={this.updateSingleUserFields.bind(this)}
-                                        saveClick={this.saveClick.bind(this)}
-                                        cancelClick={this.cancelClick.bind(this)}
-                                        selectOptions={this.props.userData.statusDd}
-                                        singleUser={this.props.userData.singleUser}
-                                        key={user.id} data={user} />
-                                );
-                            }
-                            return null;
-                        })} */}
                     </tbody>
                 </table>
                 <PaginationComponent
                     componentClassName="float-right"
-                    itemCount={dummySmsList.length}
+                    itemCount={userListToShow.length}
                     maxButtons={5}
                     itemPerPage={this.state.itemPerPage}
                     activePage={this.state.activePage}
@@ -188,8 +168,6 @@ class ContentViewWrapper extends React.Component<IContentViewWrapperProps, ICont
         updateStoreArr.map((dd) => {
             this.props.updateCommonData(this.state[dd], dd);
         })
-        // this.props.updateCommonData(this.state.statusDd, "statusDd");
-        // this.props.updateCommonData(this.state.commentsDd, "commentsDd");
     }
     public getContactListToShow(array: Array<SingleUser>): Array<SingleUser> {
         let arrayList: any = [];
@@ -202,10 +180,10 @@ class ContentViewWrapper extends React.Component<IContentViewWrapperProps, ICont
         return arrayList;
     }
     public updateStatusDdState(event: any): void {
-        this.setState({ statusDdId: event.target.value });
+        this.setState({ statusDdId: event.target.value, activePage: 1 });
     }
     public updateCommentDdState(event: any): void {
-        this.setState({ commentsDdId: event.target.value });
+        this.setState({ commentsDdId: event.target.value, activePage: 1 });
     }
     public handlePaginationChange(event: any, action: string): void {
         if (action === 'TO_PAGE_NUMBER') {
@@ -231,10 +209,6 @@ class ContentViewWrapper extends React.Component<IContentViewWrapperProps, ICont
         });
     }
     public saveClick(event: any, id: number): void {
-        // let userList = this.state.userList.slice();
-        // userList[id] = this.state.singleUser;
-        // this.setState({ userList });
-        // let index: number;
         this.props.userData.userList.map((obj, i) => {
             if (obj.id === id) {
                 this.props.putSingleUserIntoUserList(this.props.userData.singleUser, i);
