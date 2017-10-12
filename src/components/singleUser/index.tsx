@@ -32,7 +32,7 @@ class SingleUserComponent extends React.Component<ISingleUserProps, { statusDd: 
                             <select className="form-control  form-control-sm"
                                 onChange={e => this.props.updateSingleUserFields("status", e.target.value)}
                                 value={this.props.userState.singleUser.status}>
-                                <option value="1">Select</option>
+                                <option value="">Select</option>
                                 {this.props.userState.statusDd.map((el, i) => {
                                     return (<option key={i} value={el.value}>{el.label}</option>)
                                 })}
@@ -53,7 +53,7 @@ class SingleUserComponent extends React.Component<ISingleUserProps, { statusDd: 
                             <select className="form-control  form-control-sm"
                                 onChange={e => this.props.updateSingleUserFields("comments", e.target.value)}
                                 value={this.props.userState.singleUser.comments}>
-                                <option value="1">Select</option>
+                                <option value="">Select</option>
                                 {this.props.userState.commentsDd.map((el, i) => {
                                     return (<option key={i} value={el.value}>{el.label}</option>)
                                 })}
@@ -97,7 +97,12 @@ class SingleUserComponent extends React.Component<ISingleUserProps, { statusDd: 
         this.props.updateSingleUserData(data);
     }
     public saveData() {
-        // 
+        this.props.userState.userList.map((user, index) => {
+            if (user.id === this.props.userState.singleUser.id) {
+                this.props.putSingleUserIntoUserList(this.props.userState.singleUser, index);
+            }
+        });
+        this.props.history.push("/user-list");
     }
     public cancelClick() {
         this.props.history.push("/user-list");
@@ -112,13 +117,12 @@ class SingleUserComponent extends React.Component<ISingleUserProps, { statusDd: 
             })
             .then((data) => {
                 let parsedData;
-
                 parsedData = {
                     id: data.id,
                     name: data.name,
-                    status: "1",
+                    status: "",
                     conductedBy: "",
-                    comments: "1",
+                    comments: "",
                     editable: false
                 }
                 this.props.updateSingleUserData(parsedData);
@@ -141,6 +145,7 @@ export function mapDispatchToProps(dispatch: any) {
             dispatch(actions.updateSingleUserData(data));
         },
         putSingleUserIntoUserList: (value: {}, index: number) => {
+            debugger;
             dispatch(actions.putSingleUserIntoUserList({ value, index }));
         },
         updateCommonData: (value: any, prop: string) => {
