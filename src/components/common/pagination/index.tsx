@@ -9,6 +9,7 @@ class PaginationComponent extends React.Component<any, IPaginationComponentProps
     }
     render() {
         let rows = [];
+        let showPagination = true;
         for (var i = 1; i <= (this.props.itemCount / this.props.itemPerPage); i++) {
             if (this.props.activePage === i) {
                 rows.push(
@@ -30,9 +31,12 @@ class PaginationComponent extends React.Component<any, IPaginationComponentProps
                 );
             }
         }
+        if (this.props.itemCount < this.props.itemPerPage) {
+            showPagination = false;
+        }
         return (
             <nav aria-label="Page navigation">
-                <ul className={'pagination  pagination-sm' + ' ' + this.props.componentClassName}>
+                <ul hidden={!showPagination} className={'pagination  pagination-sm' + ' ' + this.props.componentClassName}>
                     <li className="page-item">
                         <button type="button" className="page-link btn btn-link"
                             onClick={e => this.props.pageChange(e, 'PERVIOUS')}>
