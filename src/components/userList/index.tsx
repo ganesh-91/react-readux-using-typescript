@@ -91,10 +91,10 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
             <div >
                 <h2>User List</h2>
                 <div className="row justify-content-start margin-bottom-10">
-                    <div className="col-md-1 col-sm-2 col-xs-12">
+                    <div className="col-md-2 col-xs-12">
                         Filters:-
                         </div>
-                    <div className="col-md-4 col-sm-5 col-xs-12">
+                    <div className="col-md-3 col-xs-12">
                         <select className="form-control  form-control-sm"
                             onChange={this.updateStatusDdState.bind(this)}
                             value={this.state.statusDdId}>
@@ -104,7 +104,17 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
                             })}
                         </select>
                     </div>
-                    <div className="col-md-4 col-sm-5 col-xs-12">
+                    <div className="col-md-3 col-xs-12">
+                        <select className="form-control  form-control-sm"
+                            onChange={this.updateCommentDdState.bind(this)}
+                            value={this.state.commentsDdId}>
+                            <option value="1" >Show all by Comment</option>
+                            {this.state.commentsDd.map((el, i) => {
+                                return (<option key={i} value={el.value}>{el.label}</option>)
+                            })}
+                        </select>
+                    </div>
+                    <div className="col-md-3 col-xs-12">
                         <select className="form-control  form-control-sm"
                             onChange={this.updateCommentDdState.bind(this)}
                             value={this.state.commentsDdId}>
