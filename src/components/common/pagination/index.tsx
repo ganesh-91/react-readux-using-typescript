@@ -10,7 +10,7 @@ class PaginationComponent extends React.Component<any, IPaginationComponentProps
     render() {
         let rows = [];
         let showPagination = true;
-        for (var i = 1; i <= (this.props.itemCount / this.props.itemPerPage); i++) {
+        for (var i = 1; i <= (Math.ceil(this.props.itemCount / this.props.itemPerPage)); i++) {
             if (this.props.activePage === i) {
                 rows.push(
                     <li className="page-item" key={i}
