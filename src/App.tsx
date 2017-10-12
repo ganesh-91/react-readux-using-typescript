@@ -1,11 +1,20 @@
 import * as React from 'react';
 import './App.css';
 
-import ContentViewWrapper from './components/contentViewWrapper';
+import { Route, Switch } from 'react-router-dom';
+
+import UserList from './components/userList';
+import SingleUserComponent from './components/singleUser';
+
 import Sidebar from './components/sidebar';
 import Header from './components/header';
 
-class App extends React.Component<{}> {
+//class ContentViewWrapper extends React.Component<IContentViewWrapperProps, IContentViewWrapperState> {
+
+class App extends React.Component<{ location?: any }, {}> {
+  constructor(prop: { location: any }) {
+    super();
+  }
   render() {
     return (
       <div>
@@ -13,7 +22,13 @@ class App extends React.Component<{}> {
         <div className="container-fluid">
           <div className="row">
             <Sidebar />
-            <ContentViewWrapper />
+            <main className="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+              <h1>Dashboard</h1>
+              <Switch>
+                <Route path='/user-list' component={UserList} />
+                <Route path='/single-user/:userId' component={SingleUserComponent} />
+              </Switch>
+            </main>
           </div >
         </div >
       </div >

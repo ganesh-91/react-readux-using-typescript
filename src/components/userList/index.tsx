@@ -75,8 +75,8 @@ class TableDataRow extends React.Component<ITableDataRowProp, {}> {
     }
 }
 
-class ContentViewWrapper extends React.Component<IContentViewWrapperProps, IContentViewWrapperState> {
-    constructor(props: IContentViewWrapperProps) {
+class UserList extends React.Component<IUserListProps, IUserListState> {
+    constructor(props: IUserListProps) {
         super(props);
         this.state = {
             activePage: 1,
@@ -88,10 +88,11 @@ class ContentViewWrapper extends React.Component<IContentViewWrapperProps, ICont
         };
     }
     public render() {
+        this.props;
         const userListToShow = this.getContactListToShow(this.props.userData.userList);
         return (
-            <main className="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-                <h1>Dashboard</h1>
+            <div >
+                <h2>User List</h2>
                 <div className="row justify-content-start margin-bottom-10">
                     <div className="col-1">
                         Filters:-
@@ -156,7 +157,7 @@ class ContentViewWrapper extends React.Component<IContentViewWrapperProps, ICont
                     itemPerPage={this.state.itemPerPage}
                     activePage={this.state.activePage}
                     pageChange={this.handlePaginationChange.bind(this)} />
-            </main >
+            </div >
         );
     }
     public componentDidMount() {
@@ -247,7 +248,7 @@ export function mapDispatchToProps(dispatch: any) {
         updateSingleUserFields: (prop: string, value: any) => {
             dispatch(actions.updateSingleUserFields({ prop, value }));
         },
-        updateUserList: (list: SingleUser[]) => {
+        updateUserList: (list: Array<SingleUser>) => {
             dispatch(actions.updateUserList(list));
         },
         updateSingleUserData: (data: SingleUser) => {
@@ -265,4 +266,4 @@ export function mapDispatchToProps(dispatch: any) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContentViewWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(UserList);

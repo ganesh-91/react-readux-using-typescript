@@ -28,7 +28,7 @@ interface StoreState {
         editable: boolean;
         comments: string;
     };
-    userList: SingleUser[];
+    userList: Array<SingleUser>;
 }
 
 interface IPaginationComponentProps {
@@ -52,7 +52,7 @@ interface ITableDataRowProp {
     updateSingleUserFields: (event: any, prop: string) => void;
 }
 
-interface IContentViewWrapperState {
+interface IUserListState {
     statusDd: Array<Status>;
     activePage: number;
     itemPerPage: number;
@@ -61,16 +61,23 @@ interface IContentViewWrapperState {
     commentsDd: Array<Comments>;
 }
 
-interface IContentViewWrapperProps {
+interface IUserListProps {
     userData: StoreState;
     updateSingleUserFields: (prop: string, value: any) => Event;
-    updateUserList: (list: SingleUser[]) => Event;
+    updateUserList: (list: Array<SingleUser>) => Event;
     updateSingleUserData: (data: SingleUser) => Event;
     updateUserListFields: (value: any, prop: string, index: number) => Event;
     putSingleUserIntoUserList: (value: {}, index: number) => Event;
     updateCommonData: (value: any, prop: string) => Event;
 }
 
+interface ISingleUserProps {
+    userState: StoreState;
+    updateSingleUserFields: (prop: string, value: any) => Event;
+    updateSingleUserData: (data: SingleUser) => Event;
+    putSingleUserIntoUserList: (value: {}, index: number) => Event;
+    updateCommonData: (value: any, prop: string) => Event;
+}
 
 // interface ITodo { StoreState
 //     id: string,
