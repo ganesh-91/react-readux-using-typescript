@@ -17,7 +17,7 @@ class SingleUserComponent extends React.Component<ISingleUserProps, { statusDd: 
         return (
             <div>
                 <h2>User Details</h2>
-                <form className="col-sm-5">
+                <form className="col-sm-5 margin-bottom-10">
                     <div className="form-group row">
                         <label className="col-sm-3 col-form-label">Name</label>
                         <div className="col-sm-9">
@@ -32,6 +32,7 @@ class SingleUserComponent extends React.Component<ISingleUserProps, { statusDd: 
                             <select className="form-control  form-control-sm"
                                 onChange={e => this.props.updateSingleUserFields("status", e.target.value)}
                                 value={this.props.userState.singleUser.status}>
+                                <option value="1">Select</option>
                                 {this.props.userState.statusDd.map((el, i) => {
                                     return (<option key={i} value={el.value}>{el.label}</option>)
                                 })}
@@ -46,6 +47,30 @@ class SingleUserComponent extends React.Component<ISingleUserProps, { statusDd: 
                                 className="form-control  form-control-sm" />
                         </div>
                     </div>
+                    <div className="form-group row">
+                        <label className="col-sm-3 col-form-label">Comments</label>
+                        <div className="col-sm-9">
+                            <select className="form-control  form-control-sm"
+                                onChange={e => this.props.updateSingleUserFields("comments", e.target.value)}
+                                value={this.props.userState.singleUser.comments}>
+                                <option value="1">Select</option>
+                                {this.props.userState.commentsDd.map((el, i) => {
+                                    return (<option key={i} value={el.value}>{el.label}</option>)
+                                })}
+                            </select>
+                        </div>
+                    </div>
+                    <div className="btn-toolbar float-right">
+                        <button type="button"
+                            onClick={this.saveData.bind(this)}
+                            className="page-link btn btn-sm">Save
+                        </button>
+                        <button type="button"
+                            onClick={this.cancelClick.bind(this)}
+                            className="page-link btn btn-sm">Cancel
+                        </button>
+                    </div>
+                    <div className="clearfix" />
                 </form>
             </div>
         );
@@ -58,8 +83,47 @@ class SingleUserComponent extends React.Component<ISingleUserProps, { statusDd: 
         updateStoreArr.map((dd) => {
             this.props.updateCommonData(this.state[dd], dd);
         })
+        this.getUserById();
     }
+    public componentWillUnmount() {
+        let data = {
+            id: 0,
+            name: "",
+            status: "1",
+            conductedBy: "",
+            comments: "1",
+            editable: false
+        }
+        this.props.updateSingleUserData(data);
+    }
+    public saveData() {
+        // 
+    }
+    public cancelClick() {
+        this.props.history.push("/user-list");
+    }
+    public getUserById() {
+        fetch('https://jsonplaceholder.typicode.com/users/' + this.props.match.params.userId)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    throw new Error("Bad response from server");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                let parsedData;
 
+                parsedData = {
+                    id: data.id,
+                    name: data.name,
+                    status: "1",
+                    conductedBy: "",
+                    comments: "1",
+                    editable: false
+                }
+                this.props.updateSingleUserData(parsedData);
+            });
+    }
 }
 
 export function mapStateToProps(store: { userState: StoreState }) {

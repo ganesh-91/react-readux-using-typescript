@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './App.css';
 
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import UserList from './components/userList';
 import SingleUserComponent from './components/singleUser';
@@ -23,11 +23,12 @@ class App extends React.Component<{ location?: any }, {}> {
           <div className="row">
             <Sidebar />
             <main className="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-              <h1>Dashboard</h1>
-              <Switch>
-                <Route path='/user-list' component={UserList} />
-                <Route path='/single-user/:userId' component={SingleUserComponent} />
-              </Switch>
+              <Router>
+                <Switch>
+                  <Route path='/user-list' component={UserList} />
+                  <Route path='/single-user/:userId' component={SingleUserComponent} />
+                </Switch>
+              </Router>
             </main>
           </div >
         </div >

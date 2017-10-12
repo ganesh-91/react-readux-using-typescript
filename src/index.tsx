@@ -4,7 +4,8 @@ import * as ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { AppRouter } from "./appRouter";
+// import { AppRouter } from "./appRouter";
+import App from './App';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -12,7 +13,7 @@ import './index.css';
 
 ReactDOM.render(
   <Provider store={store}>
-    <AppRouter />
+    <App />
   </Provider>,
   document.getElementById('root') as HTMLElement
 );

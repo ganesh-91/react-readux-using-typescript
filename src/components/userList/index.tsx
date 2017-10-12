@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import dummySmsList from '../../data';
 import * as actions from '../../actions/';
@@ -53,11 +54,8 @@ class TableDataRow extends React.Component<ITableDataRowProp, {}> {
                     </select>
                 </td>
                 <td>
-                    <div hidden={this.props.data.editable}>
-                        <button type="button" value={this.props.data.id}
-                            onClick={e => this.props.editClick(e, this.props.data.id)}
-                            className="page-link btn btn-sm">Edit
-                    </button>
+                    <div>
+                        <Link to={`/single-user/${this.props.data.id}`}>Edit</Link>
                     </div>
                     <div className="btn-toolbar" hidden={!this.props.data.editable}>
                         <button type="button" value={this.props.data.id}
@@ -89,7 +87,7 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
     }
     public render() {
         this.props;
-        const userListToShow = this.getContactListToShow(this.props.userData.userList);
+        const userListToShow = this.getUserListToShow(this.props.userData.userList);
         return (
             <div >
                 <h2>User List</h2>
@@ -161,16 +159,16 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
         );
     }
     public componentDidMount() {
-        this.props.updateUserList(dummySmsList);
         let updateStoreArr = [
             "commentsDd",
             "statusDd"
         ]
         updateStoreArr.map((dd) => {
             this.props.updateCommonData(this.state[dd], dd);
-        })
+        });
+        this.getUserList();
     }
-    public getContactListToShow(array: Array<SingleUser>): Array<SingleUser> {
+    public getUserListToShow(array: Array<SingleUser>): Array<SingleUser> {
         let arrayList: any = [];
         array.map((dataObj) => {
             if (((this.state.statusDdId === dataObj.status) || this.state.statusDdId === "1") &&
@@ -179,6 +177,21 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
             }
         });
         return arrayList;
+    }
+    public getUserList() {
+        fetch('https://jsonplaceholder.typicode.com/users')
+            .then(function (response) {
+                if (response.status >= 400) {
+                    throw new Error("Bad response from server");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                this.props.updateUserList(data);
+                // this.setState({
+                //     userList: data
+                // })
+            });
     }
     public updateStatusDdState(event: any): void {
         this.setState({ statusDdId: event.target.value, activePage: 1 });

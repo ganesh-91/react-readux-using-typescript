@@ -73,10 +73,13 @@ interface IUserListProps {
 
 interface ISingleUserProps {
     userState: StoreState;
+    match: any;
+    history: any;
     updateSingleUserFields: (prop: string, value: any) => Event;
     updateSingleUserData: (data: SingleUser) => Event;
     putSingleUserIntoUserList: (value: {}, index: number) => Event;
     updateCommonData: (value: any, prop: string) => Event;
+
 }
 
 // interface ITodo { StoreState
