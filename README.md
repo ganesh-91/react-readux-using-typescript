@@ -1,0 +1,1 @@
+This a poc of react + redux app using typescript.
