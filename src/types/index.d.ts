@@ -82,6 +82,10 @@ interface ISingleUserProps {
 
 }
 
+interface IReportProp {
+    userData: StoreState;
+}
+
 // interface ITodo { StoreState
 //     id: string,
 //     title: string,
