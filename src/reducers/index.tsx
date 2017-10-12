@@ -71,6 +71,6 @@ export function userReducer(state: StoreState, action: any): StoreState {
             });
             break;
     }
-    console.log(newState.singleUser);
+    // console.log(newState);
     return newState;
 }
