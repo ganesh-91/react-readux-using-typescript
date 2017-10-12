@@ -145,7 +145,6 @@ export function mapDispatchToProps(dispatch: any) {
             dispatch(actions.updateSingleUserData(data));
         },
         putSingleUserIntoUserList: (value: {}, index: number) => {
-            debugger;
             dispatch(actions.putSingleUserIntoUserList({ value, index }));
         },
         updateCommonData: (value: any, prop: string) => {
