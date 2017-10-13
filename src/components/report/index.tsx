@@ -34,11 +34,11 @@ class ReportComponent extends React.Component<IReportProp, {}> {
                     </div>
                     <div className="col-md-6">
                         <h3>Total Applicant</h3>
-                        <p>{this.props.userData.userList.length}</p>
+                        <h4 className="margin-left-10">{this.props.userData.userList.length}</h4>
                         <h3>Number Of Hire</h3>
-                        <p>{numberOfHire}</p>
+                        <h4 className="margin-left-10">{numberOfHire}</h4>
                         <h3>Number Of No Hire</h3>
-                        <p>{numberOfNoHire}</p>
+                        <h4 className="margin-left-10">{numberOfNoHire}</h4>
                     </div>
                 </div>
             </div>
@@ -53,5 +53,3 @@ export function mapStateToProps(store: { userState: StoreState }) {
 }
 
 export default connect(mapStateToProps, {})(ReportComponent);
-
-// export default ReportComponent;

@@ -4,7 +4,6 @@ import {
     combineReducers
 } from 'redux';
 import { userReducer } from '../reducers';
-// import { StoreState } from '../types';
 
 const reducers = combineReducers({
     userState: userReducer

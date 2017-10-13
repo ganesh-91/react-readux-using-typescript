@@ -1,8 +1,5 @@
 /// <reference path="../types/index.d.ts" />
 import * as update from 'immutability-helper';
-// import { UserAction } from '../actions';
-// import { StoreState } from '../types';
-// import { UPDATE_SINGLE_USER_FIELDS, UPDATE_SINGLE_USER_DATA, UPDATE_USER_LIST } from '../constants/index';
 
 const userInitialState = {
     statusDd: [],

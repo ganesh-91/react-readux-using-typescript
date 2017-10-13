@@ -9,7 +9,6 @@ import * as actions from '../../actions/';
 import PaginationComponent from '../common/pagination';
 
 class TableDataRow extends React.Component<ITableDataRowProp, {}> {
-
     render() {
         return (
             <tr>
