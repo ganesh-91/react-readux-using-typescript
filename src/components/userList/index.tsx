@@ -60,7 +60,7 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
             filterByApplicantName: '',
             filterByConductorName: '',
             statusDd: [{ label: 'New', value: 'New' }, { label: 'Hired', value: 'Hired' }, { label: 'Round 1', value: 'Round 1' }, { label: 'Round 2', value: 'Round 2' }, { label: 'Round 3', value: 'Round 3' }],
-            commentsDd: [{ value: 'StrongHire', label: 'Strong Hire' }, { value: 'Hire', label: 'Hire' }, { value: 'NoHire', label: 'No Hire' }, { value: 'StrongNoHire', label: 'Strong no hire' }],
+            commentsDd: [{ value: 'Strong Hire', label: 'Strong Hire' }, { value: 'Hire', label: 'Hire' }, { value: 'No Hire', label: 'No Hire' }, { value: 'Strong No Hire', label: 'Strong no hire' }],
         };
     }
     public render() {
