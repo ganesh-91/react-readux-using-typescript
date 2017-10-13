@@ -17,17 +17,17 @@ class TableDataRow extends React.Component<ITableDataRowProp, {}> {
                     <label>{this.props.data.id}</label>
                 </td>
                 <td>
-                    <label hidden={this.props.data.editable}>{this.props.data.name}</label>
+                    <label >{this.props.data.name}</label>
                 </td>
                 <td>
-                    <label hidden={this.props.data.editable}>{this.props.data.status}</label>
+                    <label >{this.props.data.status}</label>
                 </td>
                 <td>
-                    <label hidden={this.props.data.editable}>{this.props.data.conductedBy}</label>
+                    <label >{this.props.data.conductedBy}</label>
 
                 </td>
                 <td>
-                    <label hidden={this.props.data.editable}>{this.props.data.comments}</label>
+                    <label >{this.props.data.comments}</label>
                 </td>
                 <td>
                     <div>
