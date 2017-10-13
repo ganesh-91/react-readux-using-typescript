@@ -2,6 +2,7 @@
   "name": "react-type-script",
   "version": "0.1.0",
   "private": true,
+    "homepage": "http://ganesh-91.github.io/react-readux-using-typescript",
   "dependencies": {
     "@types/immutability-helper": "^2.0.15",
     "@types/react-redux": "^5.0.10",
