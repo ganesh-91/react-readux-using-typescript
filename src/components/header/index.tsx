@@ -20,7 +20,7 @@ class Header extends React.Component<{}, { showMenu: boolean }> {
                         <span className="navbar-toggler-icon"></span>
                     </button>
                 </div>
-                <div className={"dropdown-menu header-menu " + (this.state.showMenu ? "show" : "")}>
+                <div className={'dropdown-menu header-menu ' + (this.state.showMenu ? 'show' : '')}>
                     <ul className="nav nav-pills flex-column margin-left-10">
                         <li className="nav-item">
                             <Link to={`/user-list`}

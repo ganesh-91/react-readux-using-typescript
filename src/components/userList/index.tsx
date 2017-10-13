@@ -1,7 +1,7 @@
 /// <reference path="../../types/index.d.ts" />
 
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { connect, Dispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import * as actions from '../../actions/';
@@ -55,16 +55,15 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
         this.state = {
             activePage: 1,
             itemPerPage: 4,
-            statusDdId: "1",
-            commentsDdId: "1",
-            filterByApplicantName: "",
-            filterByConductorName: "",
-            statusDd: [{ label: "New", value: "New" }, { label: "Hired", value: "Hired" }, { label: "Round 1", value: "Round 1" }, { label: "Round 2", value: "Round 2" }, { label: "Round 3", value: "Round 3" }],
-            commentsDd: [{ value: "StrongHire", label: "Strong Hire" }, { value: "Hire", label: "Hire" }, { value: "NoHire", label: "No Hire" }, { value: "StrongNoHire", label: "Strong no hire" }],
+            statusDdId: '1',
+            commentsDdId: '1',
+            filterByApplicantName: '',
+            filterByConductorName: '',
+            statusDd: [{ label: 'New', value: 'New' }, { label: 'Hired', value: 'Hired' }, { label: 'Round 1', value: 'Round 1' }, { label: 'Round 2', value: 'Round 2' }, { label: 'Round 3', value: 'Round 3' }],
+            commentsDd: [{ value: 'StrongHire', label: 'Strong Hire' }, { value: 'Hire', label: 'Hire' }, { value: 'NoHire', label: 'No Hire' }, { value: 'StrongNoHire', label: 'Strong no hire' }],
         };
     }
     public render() {
-        this.props;
         const userListToShow = this.getUserListToShow(this.props.userData.userList);
         return (
             <div >
@@ -75,21 +74,23 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
                 <div className="row justify-content-start margin-bottom-10">
                     <div className="col-md-3 col-xs-12">
                         <select className="form-control  form-control-sm"
-                            onChange={this.updateStatusDdState.bind(this)}
+                            onChange={(event: any) => {
+                                this.updateStatusDdState(event);
+                            }}
                             value={this.state.statusDdId}>
                             <option value="1" >Show all by Statue</option>
                             {this.state.statusDd.map((el, i) => {
-                                return (<option key={i} value={el.value}>{el.label}</option>)
+                                return (<option key={i} value={el.value}>{el.label}</option>);
                             })}
                         </select>
                     </div>
                     <div className="col-md-3 col-xs-12">
                         <select className="form-control  form-control-sm"
-                            onChange={this.updateCommentDdState.bind(this)}
+                            onChange={e => { this.updateCommentDdState(e); }}
                             value={this.state.commentsDdId}>
                             <option value="1" >Show all by Comment</option>
                             {this.state.commentsDd.map((el, i) => {
-                                return (<option key={i} value={el.value}>{el.label}</option>)
+                                return (<option key={i} value={el.value}>{el.label}</option>);
                             })}
                         </select>
                     </div>
@@ -127,17 +128,25 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
                                 return (
                                     <TableDataRow
                                         index={i}
-                                        editClick={this.editClick.bind(this)}
-                                        updateSingleUserFields={this.updateSingleUserFields.bind(this)}
-                                        saveClick={this.saveClick.bind(this)}
-                                        cancelClick={this.cancelClick.bind(this)}
+                                        editClick={(event: any, id: number) => {
+                                            this.editClick(event, id);
+                                        }}
+                                        updateSingleUserFields={(event: any, prop: string) => {
+                                            this.updateSingleUserFields(event, prop);
+                                        }}
+                                        saveClick={(event: any, id: number) => {
+                                            this.saveClick(event, id);
+                                        }}
+                                        cancelClick={(event: any, id: number) => {
+                                            this.cancelClick(event, id);
+                                        }}
                                         selectOptions={this.props.userData.statusDd}
                                         commentOptions={this.props.userData.commentsDd}
                                         singleUser={this.props.userData.singleUser}
                                         key={user.id} data={user} />
                                 );
                             }
-                            return null
+                            return null;
                         })}
                     </tbody>
                 </table>
@@ -147,15 +156,18 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
                     maxButtons={5}
                     itemPerPage={this.state.itemPerPage}
                     activePage={this.state.activePage}
-                    pageChange={this.handlePaginationChange.bind(this)} />
+                    pageChange={(value: number) => {
+                        this.handlePaginationChange(value);
+                    }} />
+                <div className="clearfix" />
             </div >
         );
     }
     public componentDidMount() {
         let updateStoreArr = [
-            "commentsDd",
-            "statusDd"
-        ]
+            'commentsDd',
+            'statusDd'
+        ];
         updateStoreArr.map((dd) => {
             this.props.updateCommonData(this.state[dd], dd);
         });
@@ -166,57 +178,56 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
     public getUserListToShow(array: Array<SingleUser>): Array<SingleUser> {
         let arrayList: any = [];
         array.map((dataObj) => {
-            if (((this.state.statusDdId === dataObj.status) || this.state.statusDdId === "1") &&
-                ((this.state.commentsDdId === dataObj.comments) || this.state.commentsDdId === "1") &&
-                ((dataObj.name.toUpperCase().includes(this.state.filterByApplicantName.toUpperCase())) || this.state.filterByApplicantName === "") &&
-                ((dataObj.conductedBy.toUpperCase().includes(this.state.filterByConductorName.toUpperCase())) || this.state.filterByConductorName === "")) {
+            if (((this.state.statusDdId === dataObj.status) || this.state.statusDdId === '1') &&
+                ((this.state.commentsDdId === dataObj.comments) || this.state.commentsDdId === '1') &&
+                ((dataObj.name.toUpperCase().includes(this.state.filterByApplicantName.toUpperCase())) || this.state.filterByApplicantName === '') &&
+                ((dataObj.conductedBy.toUpperCase().includes(this.state.filterByConductorName.toUpperCase())) || this.state.filterByConductorName === '')) {
                 arrayList.push(dataObj);
             }
         });
         return arrayList;
-        //dataObj.contFirstName.toUpperCase().includes(this.props.contactCommonData.searchField.toUpperCase()
     }
     public getUserList() {
         fetch('https://jsonplaceholder.typicode.com/users')
-            .then(function (response) {
+            .then(function (response: any) {
                 if (response.status >= 400) {
-                    throw new Error("Bad response from server");
+                    throw new Error('Bad response from server');
                 }
                 return response.json();
             })
             .then((data) => {
                 let parsedArray: Array<SingleUser> = [];
-                data.map((obj: any) => {
+                data.map((obj: SingleUser) => {
                     parsedArray.push({
                         name: obj.name,
                         id: obj.id,
-                        conductedBy: "",
-                        status: "",
+                        conductedBy: '',
+                        status: '',
                         editable: false,
-                        comments: ""
-                    })
+                        comments: ''
+                    });
                 });
                 this.props.updateUserList(parsedArray);
             });
     }
-    public updateStatusDdState(event: any): void {
+    private updateStatusDdState(event: any): void {
         this.setState({ statusDdId: event.target.value, activePage: 1 });
     }
-    public updateCommentDdState(event: any): void {
+    private updateCommentDdState(event: any): void {
         this.setState({ commentsDdId: event.target.value, activePage: 1 });
     }
-    public handlePaginationChange(value: number): void {
+    private handlePaginationChange(value: number): void {
         this.setState({ activePage: value });
     }
-    public editClick(event: any, id: number): void {
+    private editClick(event: any, id: number): void {
         this.props.userData.userList.map((obj, i) => {
             if (obj.id === id) {
                 this.props.updateSingleUserData(obj);
-                this.props.updateUserListFields(true, "editable", i);
+                this.props.updateUserListFields(true, 'editable', i);
             }
         });
     }
-    public saveClick(event: any, id: number): void {
+    private saveClick(event: any, id: number): void {
         this.props.userData.userList.map((obj, i) => {
             if (obj.id === id) {
                 this.props.putSingleUserIntoUserList(this.props.userData.singleUser, i);
@@ -224,22 +235,22 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
         });
 
     }
-    public cancelClick(event: any, id: number): void {
+    private cancelClick(event: any, id: number): void {
         this.props.userData.userList.map((obj, i) => {
             if (obj.id === id) {
-                this.props.updateUserListFields(false, "editable", i);
+                this.props.updateUserListFields(false, 'editable', i);
             }
         });
         this.props.updateSingleUserData({
             id: 1,
-            name: "",
-            conductedBy: "",
-            status: "",
+            name: '',
+            conductedBy: '',
+            status: '',
             editable: false,
-            comments: ""
+            comments: ''
         });
     }
-    public updateSingleUserFields(event: any, prop: string): void {
+    private updateSingleUserFields(event: any, prop: string): void {
         this.props.updateSingleUserFields(prop, event.target.value);
     }
 }
@@ -247,12 +258,12 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
 export function mapStateToProps(store: { userState: StoreState }) {
     return {
         userData: store.userState
-    }
+    };
 }
 
-export function mapDispatchToProps(dispatch: any) {
+export function mapDispatchToProps(dispatch: Dispatch<actions.UserAction>) {
     return {
-        updateSingleUserFields: (prop: string, value: any) => {
+        updateSingleUserFields: (prop: string, value: {}) => {
             dispatch(actions.updateSingleUserFields({ prop, value }));
         },
         updateUserList: (list: Array<SingleUser>) => {
@@ -261,16 +272,16 @@ export function mapDispatchToProps(dispatch: any) {
         updateSingleUserData: (data: SingleUser) => {
             dispatch(actions.updateSingleUserData(data));
         },
-        updateUserListFields: (value: any, prop: string, index: number) => {
+        updateUserListFields: (value: {}, prop: string, index: number) => {
             dispatch(actions.updateUserListFields({ value, prop, index }));
         },
         putSingleUserIntoUserList: (value: {}, index: number) => {
             dispatch(actions.putSingleUserIntoUserList({ value, index }));
         },
-        updateCommonData: (value: any, prop: string) => {
+        updateCommonData: (value: {}, prop: string) => {
             dispatch(actions.updateCommonData({ value, prop }));
         },
-    }
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserList);

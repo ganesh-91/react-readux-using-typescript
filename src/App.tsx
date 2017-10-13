@@ -10,10 +10,8 @@ import ReportComponent from './components/report';
 import Sidebar from './components/sidebar';
 import Header from './components/header';
 
-//class ContentViewWrapper extends React.Component<IContentViewWrapperProps, IContentViewWrapperState> {
-
-class App extends React.Component<{ location?: any }, {}> {
-  constructor(prop: { location: any }) {
+class App extends React.Component<{}, {}> {
+  constructor(prop: {}) {
     super();
   }
   render() {
@@ -25,9 +23,9 @@ class App extends React.Component<{ location?: any }, {}> {
             <Sidebar />
             <main className="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
               <Switch>
-                <Route path='/user-list' component={UserList} />
-                <Route path='/single-user/:userId' component={SingleUserComponent} />
-                <Route path='/report' component={ReportComponent} />
+                <Route path="/user-list" component={UserList} />
+                <Route path="/single-user/:userId" component={SingleUserComponent} />
+                <Route path="/report" component={ReportComponent} />
               </Switch>
             </main>
           </div >

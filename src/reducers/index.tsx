@@ -1,5 +1,5 @@
 /// <reference path="../types/index.d.ts" />
-import * as update from "immutability-helper";
+import * as update from 'immutability-helper';
 // import { UserAction } from '../actions';
 // import { StoreState } from '../types';
 // import { UPDATE_SINGLE_USER_FIELDS, UPDATE_SINGLE_USER_DATA, UPDATE_USER_LIST } from '../constants/index';
@@ -9,19 +9,19 @@ const userInitialState = {
     commentsDd: [],
     singleUser: {
         id: 0,
-        name: "",
-        conductedBy: "",
-        status: "",
+        name: '',
+        conductedBy: '',
+        status: '',
         editable: false,
-        comments: ""
+        comments: ''
     },
     userList: []
 };
 
-export function userReducer(state: StoreState, action: any): StoreState {
+export function userReducer(state: StoreState, action: Actions): StoreState {
     let newState = state;
 
-    if (typeof state === "undefined") {
+    if (typeof state === 'undefined') {
         newState = userInitialState;
     }
 

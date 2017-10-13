@@ -11,7 +11,7 @@ export interface UpdateUserList {
 export interface UpdateUserListFields {
     type: string;
     data: {
-        value: any;
+        value: {};
         index: number;
         prop: string;
     };
@@ -27,7 +27,7 @@ export interface UpdateSingleUserData {
 export interface UpdateSingleUserFields {
     type: string;
     data: {
-        value: any;
+        value: {};
         prop: string;
     };
 }
@@ -48,6 +48,8 @@ export interface UpdateCommonData {
     };
 }
 
+export type UserAction = UpdateUserList | UpdateUserListFields | UpdateSingleUserData | UpdateSingleUserFields | PutSingleUserIntoUserList | UpdateCommonData;
+
 export function updateUserList(list: SingleUser[]): UpdateUserList {
     return {
         type: 'UPDATE_USER_LIST',
@@ -57,7 +59,7 @@ export function updateUserList(list: SingleUser[]): UpdateUserList {
     };
 }
 
-export function updateUserListFields(data: { value: any, prop: string, index: number }): UpdateUserListFields {
+export function updateUserListFields(data: { value: {}, prop: string, index: number }): UpdateUserListFields {
     return {
         type: 'UPDATE_USER_LIST_FIELDS',
         data: {
@@ -77,7 +79,7 @@ export function updateSingleUserData(value: SingleUser): UpdateSingleUserData {
     };
 }
 
-export function updateSingleUserFields(data: { value: any, prop: string }): UpdateSingleUserFields {
+export function updateSingleUserFields(data: { value: {}, prop: string }): UpdateSingleUserFields {
     return {
         type: 'UPDATE_SINGLE_USER_FIELDS',
         data: {
