@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { PieChart } from 'react-easy-chart';
+import HighChartsComponent from "../common/highCharts";
 
 class ReportComponent extends React.Component<IReportProp, {}> {
     constructor(props: IReportProp) {
@@ -19,17 +19,21 @@ class ReportComponent extends React.Component<IReportProp, {}> {
                 numberOfNoHire = numberOfNoHire + 1;
             }
         });
-        let dataArr = [
-            { key: 'Total Hire', value: numberOfHire },
-            { key: 'Total No Hire', value: numberOfNoHire }
-        ];
+        let dataArr = {
+            series: [{
+                type: "pie",
+                data: [
+                    ['Total Hire', numberOfHire],
+                    ['Total No Hire', numberOfNoHire]],
+            }]
+        };
         return (
             <div className="margin-top-20">
                 <div className="row">
                     <div className="col-md-6 text-center">
-                        <PieChart
-                            size={300}
-                            data={dataArr}
+                        <HighChartsComponent
+                            container={"chartsPie"}
+                            chartsOptions={dataArr}
                         />
                     </div>
                     <div className="col-md-6">

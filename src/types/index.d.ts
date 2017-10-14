@@ -55,7 +55,8 @@ interface ITableDataRowProp {
     data: SingleUser;
     selectOptions: Array<Status>;
     commentOptions: Array<Comments>;
-    editClick: (event: any, id: number) => void;
+    editClick: (event: any,
+        id: number) => void;
     saveClick: (event: any, id: number) => void;
     cancelClick: (event: any, id: number) => void;
     updateSingleUserFields: (event: any, prop: string) => void;
@@ -95,4 +96,12 @@ interface ISingleUserProps {
 
 interface IReportProp {
     userData: StoreState;
+}
+
+interface IHighChartsProps {
+    modules?: any[];
+    container: string;
+    pieData?: any;
+    chartsOptions: {};
+    pieColors?: Array<String>;
 }
