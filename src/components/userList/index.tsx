@@ -257,7 +257,14 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
 
         this.props.userData.userList.map((obj, i) => {
             if (obj.id === id) {
-                this.props.putSingleUserIntoUserList(this.props.userData.singleUser, i);
+                this.props.putSingleUserIntoUserList({
+                    name: this.props.userData.singleUser.name,
+                    comments: this.props.userData.singleUser.comments.trim(),
+                    conductedBy: this.props.userData.singleUser.conductedBy,
+                    editable: this.props.userData.singleUser.editable,
+                    id: this.props.userData.singleUser.id,
+                    status: this.props.userData.singleUser.status
+                }, i);
                 newState[i] = this.props.userData.singleUser;
             }
         });
@@ -279,7 +286,6 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
         });
     }
     private updateSingleUserFields(event: any, prop: string): void {
-        debugger;
         this.props.updateSingleUserFields(prop, event.target.value);
     }
 }

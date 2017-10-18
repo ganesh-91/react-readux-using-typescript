@@ -8,13 +8,21 @@ import { connect } from 'react-redux';
 const Sidebar = (props: IReportProp) => {
     let numberOfHire: number = 0, numberOfNoHire: number = 0;
     props.userData.userList.map((user) => {
+        // if (user.comments.toUpperCase().includes('HIRE')) {
+        //     if (user.comments.toUpperCase().includes('NO ')) {
+        //         numberOfNoHire = numberOfNoHire + 1;
+        //     } else {
+        //         numberOfHire = numberOfHire + 1;
+        //     }
+
+        // }
+        let arr = user.comments.toUpperCase().split(' ');
         if (user.comments.toUpperCase().includes('HIRE')) {
-            if (user.comments.toUpperCase().includes(' NO ')) {
+            if (arr.indexOf('NO') > -1) {
                 numberOfNoHire = numberOfNoHire + 1;
             } else {
                 numberOfHire = numberOfHire + 1;
             }
-
         }
     });
     return (
