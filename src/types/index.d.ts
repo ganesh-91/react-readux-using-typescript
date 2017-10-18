@@ -3,11 +3,6 @@ interface Status {
     label: string;
 }
 
-interface Comments {
-    value: string;
-    label: string;
-}
-
 interface Actions {
     type: string;
     data: {
@@ -28,7 +23,6 @@ interface SingleUser {
 
 interface StoreState {
     statusDd: Array<Status>;
-    commentsDd: Array<Comments>;
     singleUser: {
         id: number;
         name: string;
@@ -54,7 +48,6 @@ interface ITableDataRowProp {
     singleUser: SingleUser;
     data: SingleUser;
     selectOptions: Array<Status>;
-    commentOptions: Array<Comments>;
     editClick: (event: any,
         id: number) => void;
     saveClick: (event: any, id: number) => void;
@@ -70,7 +63,6 @@ interface IUserListState {
     itemPerPage: number;
     statusDdId: string;
     commentsDdId: string;
-    commentsDd: Array<Comments>;
 }
 
 interface IUserListProps {

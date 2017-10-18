@@ -5,7 +5,7 @@ import { connect, Dispatch } from 'react-redux';
 
 import * as actions from '../../actions';
 
-class SingleUserComponent extends React.Component<ISingleUserProps, { statusDd: Array<Status>; commentsDd: Array<Comments>; }> {
+class SingleUserComponent extends React.Component<ISingleUserProps, { statusDd: Array<Status>; }> {
     constructor(props: ISingleUserProps) {
         super(props);
         this.state = {
@@ -13,11 +13,7 @@ class SingleUserComponent extends React.Component<ISingleUserProps, { statusDd: 
             { label: 'Hired', value: 'Hired' },
             { label: 'Round 1', value: 'Round 1' },
             { label: 'Round 2', value: 'Round 2' },
-            { label: 'Round 3', value: 'Round 3' }],
-            commentsDd: [{ value: 'Strong Hire', label: 'Strong Hire' },
-            { value: 'Hire', label: 'Hire' },
-            { value: 'No Hire', label: 'No Hire' },
-            { value: 'Strong No Hire', label: 'Strong no hire' }],
+            { label: 'Round 3', value: 'Round 3' }]
         };
     }
     public render() {
@@ -57,14 +53,9 @@ class SingleUserComponent extends React.Component<ISingleUserProps, { statusDd: 
                     <div className="form-group row">
                         <label className="col-sm-3 col-form-label">Comments</label>
                         <div className="col-sm-9">
-                            <select className="form-control  form-control-sm"
+                            <input value={this.props.userState.singleUser.comments}
                                 onChange={e => this.props.updateSingleUserFields('comments', e.target.value)}
-                                value={this.props.userState.singleUser.comments}>
-                                <option value="">Select</option>
-                                {this.props.userState.commentsDd.map((el, i) => {
-                                    return (<option key={i} value={el.value}>{el.label}</option>);
-                                })}
-                            </select>
+                                className="form-control  form-control-sm" />
                         </div>
                     </div>
                     <div className="btn-toolbar float-right">

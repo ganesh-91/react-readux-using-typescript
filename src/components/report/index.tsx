@@ -12,10 +12,11 @@ class ReportComponent extends React.Component<IReportProp, {}> {
     render() {
         let numberOfHire: number = 0, numberOfNoHire: number = 0;
         this.props.userData.userList.map((user) => {
-            if ((user.comments === 'StrongHire') || (user.comments === 'Hire')) {
+            debugger;
+            if ((user.comments === 'Strong Hire') || (user.comments === 'Hire')) {
                 numberOfHire = numberOfHire + 1;
             }
-            if ((user.comments === 'NoHire') || (user.comments === 'StrongNoHire')) {
+            if ((user.comments === 'No Hire') || (user.comments === 'Strong No Hire')) {
                 numberOfNoHire = numberOfNoHire + 1;
             }
         });

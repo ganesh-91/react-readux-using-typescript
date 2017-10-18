@@ -3,7 +3,6 @@ import * as update from 'immutability-helper';
 
 const userInitialState = {
     statusDd: [],
-    commentsDd: [],
     singleUser: {
         id: 0,
         name: '',
@@ -16,7 +15,7 @@ const userInitialState = {
 };
 
 export function userReducer(state: StoreState, action: Actions): StoreState {
-    let newState = state;
+    let newState = state, updatedList: any;
 
     if (typeof state === 'undefined') {
         newState = userInitialState;
@@ -31,13 +30,34 @@ export function userReducer(state: StoreState, action: Actions): StoreState {
             break;
 
         case 'UPDATE_USER_LIST_FIELDS':
-            newState = update(state, {
-                userList: {
-                    [action.data.index]: {
-                        [action.data.prop]: { $set: action.data.value }
+            if ((action.data.prop = "editable") && (action.data.value === true)) {
+                updatedList = state.userList.map((user, i) => {
+
+                    const newUser = update(user, {
+                        editable: {
+                            $apply: () => {
+                                if (action.data.index === i) {
+                                    return true;
+                                }
+                                return false;
+                            }
+                        }
+                    });
+                    return newUser;
+                });
+                newState = update(state, {
+                    userList: { $set: updatedList }
+                });
+                debugger;
+            } else {
+                newState = update(state, {
+                    userList: {
+                        [action.data.index]: {
+                            [action.data.prop]: { $set: action.data.value }
+                        }
                     }
-                }
-            });
+                });
+            }
             break;
 
         case 'UPDATE_SINGLE_USER_FIELDS':
