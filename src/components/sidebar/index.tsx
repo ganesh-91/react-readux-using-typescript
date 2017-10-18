@@ -8,7 +8,11 @@ import { connect } from 'react-redux';
 const Sidebar = (props: IReportProp) => {
     let numberOfHire: number = 0, numberOfNoHire: number = 0;
     props.userData.userList.map((user) => {
-        if (user.comments.toUpperCase().includes('HIRE')) {
+        let bool = (user.comments.toUpperCase().includes('.HIRE') ||
+            user.comments.toUpperCase().includes(',HIRE') ||
+            user.comments.toUpperCase().includes(' HIRE'));
+            debugger;
+        if (bool) {
             numberOfHire = numberOfHire + 1;
         }
     });
