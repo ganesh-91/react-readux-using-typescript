@@ -8,15 +8,15 @@ import { connect } from 'react-redux';
 const Sidebar = (props: IReportProp) => {
     let numberOfHire: number = 0, numberOfNoHire: number = 0;
     props.userData.userList.map((user) => {
-        let bool = (user.comments.toUpperCase().includes('.HIRE') ||
-            user.comments.toUpperCase().includes(',HIRE') ||
-            user.comments.toUpperCase().includes(' HIRE'));
-            debugger;
-        if (bool) {
-            numberOfHire = numberOfHire + 1;
+        if (user.comments.toUpperCase().includes('HIRE')) {
+            if (user.comments.toUpperCase().includes(' NO ')) {
+                numberOfNoHire = numberOfNoHire + 1;
+            } else {
+                numberOfHire = numberOfHire + 1;
+            }
+
         }
     });
-    numberOfNoHire = props.userData.userList.length - numberOfHire;
     return (
         <div className="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
             <div>
