@@ -67,6 +67,7 @@ interface IUserListState {
 
 interface IUserListProps {
     userData: StoreState;
+    updateUserListResetEditable: () => void;
     updateSingleUserFields: (prop: string, value: any) => void;
     updateUserList: (list: Array<SingleUser>) => void;
     updateSingleUserData: (data: SingleUser) => void;

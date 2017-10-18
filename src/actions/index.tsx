@@ -48,7 +48,11 @@ export interface UpdateCommonData {
     };
 }
 
-export type UserAction = UpdateUserList | UpdateUserListFields | UpdateSingleUserData | UpdateSingleUserFields | PutSingleUserIntoUserList | UpdateCommonData;
+export interface updateUserListResetEditable {
+    type: string;
+}
+
+export type UserAction = UpdateUserList | UpdateUserListFields | UpdateSingleUserData | UpdateSingleUserFields | PutSingleUserIntoUserList | UpdateCommonData | updateUserListResetEditable;
 
 export function updateUserList(list: SingleUser[]): UpdateUserList {
     return {
@@ -67,6 +71,12 @@ export function updateUserListFields(data: { value: {}, prop: string, index: num
             index: data.index,
             prop: data.prop
         }
+    };
+}
+
+export function updateUserListResetEditable(): updateUserListResetEditable {
+    return {
+        type: 'UPDATE_USER_LIST_RESET_EDITABLE'
     };
 }
 

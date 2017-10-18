@@ -29,6 +29,20 @@ export function userReducer(state: StoreState, action: Actions): StoreState {
             });
             break;
 
+        case 'UPDATE_USER_LIST_RESET_EDITABLE':
+            updatedList = state.userList.map((user, i) => {
+                const newUser = update(user, {
+                    editable: {
+                        $apply: () => { return false; }
+                    }
+                });
+                return newUser;
+            });
+            newState = update(state, {
+                userList: { $set: updatedList }
+            });
+            break;
+
         case 'UPDATE_USER_LIST_FIELDS':
             if ((action.data.prop = "editable") && (action.data.value === true)) {
                 updatedList = state.userList.map((user, i) => {
@@ -48,7 +62,6 @@ export function userReducer(state: StoreState, action: Actions): StoreState {
                 newState = update(state, {
                     userList: { $set: updatedList }
                 });
-                debugger;
             } else {
                 newState = update(state, {
                     userList: {

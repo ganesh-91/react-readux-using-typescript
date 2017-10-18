@@ -98,6 +98,7 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
                         <select className="form-control  form-control-sm"
                             onChange={(event: any) => {
                                 this.updateStatusDdState(event);
+                                this.props.updateUserListResetEditable();
                             }}
                             value={this.state.statusDdId}>
                             <option value="1" >Show all by Statue</option>
@@ -111,6 +112,7 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
                             placeholder="Search in Applicant's Name"
                             onChange={(event) => {
                                 this.setState({ filterByApplicantName: event.target.value });
+                                this.props.updateUserListResetEditable();
                             }}
                             className="form-control form-control-sm" />
                     </div>
@@ -119,6 +121,7 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
                             placeholder="Search in Conductor's Name"
                             onChange={(event) => {
                                 this.setState({ filterByConductorName: event.target.value });
+                                this.props.updateUserListResetEditable();
                             }}
                             className="form-control form-control-sm" />
                     </div>
@@ -169,6 +172,7 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
                     activePage={this.state.activePage}
                     pageChange={(value: number) => {
                         this.handlePaginationChange(value);
+                        this.props.updateUserListResetEditable();
                     }} />
                 <div className="clearfix" />
             </div >
@@ -198,6 +202,7 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
             }
         });
         return arrayList;
+
     }
     public getUserList() {
         // fetch('https://jsonplaceholder.typicode.com/users')
@@ -216,7 +221,7 @@ class UserList extends React.Component<IUserListProps, IUserListState> {
                     conductedBy: 'Ramesh',
                     status: 'Round 3',
                     editable: false,
-                    comments: 'the candidate is good.Hire'
+                    comments: 'a random comment.Hire'
                 });
                 data.map((obj: any, i: number) => {
                     parsedArray.push({
@@ -289,6 +294,9 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.UserAction>) {
     return {
         updateSingleUserFields: (prop: string, value: {}) => {
             dispatch(actions.updateSingleUserFields({ prop, value }));
+        },
+        updateUserListResetEditable: () => {
+            dispatch(actions.updateUserListResetEditable());
         },
         updateUserList: (list: Array<SingleUser>) => {
             dispatch(actions.updateUserList(list));
